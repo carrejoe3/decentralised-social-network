@@ -31,16 +31,13 @@ class Main extends Component {
                 return (
                   <div className="card mb-4" key={ key }>
                     <div className="card-header">
-                      { this.props.account
-                        ? <img
-                          className="mr-2"
-                          width="30"
-                          height="30"
-                          src={ `data:image/png;base64,${new Identicon(post.author, 30).toString()}` }
-                          alt="Profile icon"
-                        />
-                        : <span></span>
-                      }
+                      <img
+                        className="mr-2"
+                        width="30"
+                        height="30"
+                        src={ `data:image/png;base64,${new Identicon(post.author, 30).toString()}` }
+                        alt="Profile icon"
+                      />
                       <small className="text-muted">{ post.author }</small>
                     </div>
                     <ul id="postList" className="list-group list-group-flush">
