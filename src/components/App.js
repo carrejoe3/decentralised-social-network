@@ -18,6 +18,7 @@ class App extends Component {
     }
 
     this.createPost = this.createPost.bind(this)
+    this.tipPost = this.tipPost.bind(this)
   }
 
   async componentWillMount () {
@@ -52,6 +53,16 @@ class App extends Component {
     this.state.socialNetwork.methods.createPost(content).send({ from: this.state.account })
       .once('receipt', (receipt) => {
         this.setState({ loading: false })
+        console.log(receipt)
+      })
+  }
+
+  tipPost (id, tipAmount) {
+    this.setState({ loading: true })
+    this.state.socialNetwork.methods.tipPost(id).send({ from: this.state.account, value: tipAmount })
+      .once('receipt', (receipt) => {
+        this.setState({ loading: false })
+        console.log(receipt)
       })
   }
 
@@ -97,6 +108,7 @@ class App extends Component {
           : <Main
               posts={ this.state.posts }
               createPost={ this.createPost }
+              tipPost={ this.tipPost }
             />
         }
       </div>
