@@ -1,8 +1,52 @@
 import React, { Component } from 'react';
+import Web3 from 'web3';
 import logo from '../logo.png';
 import './App.css';
 
 class App extends Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      account: ''
+    }
+  }
+
+  async componentWillMount () {
+    await this.loadWeb3()
+    await this.loadBlockchainData()
+  }
+
+  async loadWeb3 () {
+    // Modern dapp browsers...
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      try {
+        // Request account access if needed
+        await window.ethereum.enable();
+      } catch (error) {
+        // User denied account access...
+        console.error(error)
+      }
+    }
+    // Legacy dapp browsers...
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    }
+    // Non-dapp browsers...
+    else {
+      console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+    }
+  }
+
+  async loadBlockchainData () {
+    const web3 = window.web3
+
+    // Load account
+    const accounts = await web3.eth.getAccounts()
+    this.setState({ account: accounts[0] })
+  }
+
   render() {
     return (
       <div>
@@ -15,6 +59,11 @@ class App extends Component {
           >
             Dapp University
           </a>
+          <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
+            <small className="text-secondary">
+              <small id="account">{ this.state.account }</small>
+            </small>
+          </li>
         </nav>
         <div className="container-fluid mt-5">
           <div className="row">
