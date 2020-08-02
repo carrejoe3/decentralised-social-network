@@ -91,6 +91,11 @@ class App extends Component {
         })
       }
 
+      // Sort posts: show highest tipped posts first
+      this.setState({
+        posts: this.state.posts.sort((a, b) => b.tipAmount - a.tipAmount)
+      })
+
       this.setState({ loading: false })
     } else {
       window.alert('SocialNetwork contract not deployed to detected network.')
