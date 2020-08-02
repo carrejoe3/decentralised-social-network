@@ -11,7 +11,7 @@ class Navbar extends Component {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Dapp University
+          Social Network
         </a>
         <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
           <small className="text-secondary">
