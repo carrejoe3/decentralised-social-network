@@ -8,6 +8,25 @@ class Main extends Component {
         <div className="row">
           <main role="main" className="col-lg-12 ml-auto mr-auto" style={{ maxWidth: '500px' }}>
             <div className="content mr-auto ml-auto">
+              <p>&nbsp;</p>
+              <form onSubmit={(event) => {
+                event.preventDefault()
+                this.props.createPost(this.postContent.value)
+              }}>
+                <div className="form-group">
+                  <input
+                    id="postContent"
+                    ref={(input) => { this.postContent = input }}
+                    type="text"
+                    className="form-control"
+                    placeholder="What's on your mind?"
+                    required
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary btn-block">Share</button>
+              </form>
+              <p>&nbsp;</p>
+
               { this.props.posts.map((post, key) => {
                 return (
                   <div className="card mb-4" key={ key }>

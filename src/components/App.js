@@ -16,6 +16,8 @@ class App extends Component {
       posts: [],
       loading: true
     }
+
+    this.createPost = this.createPost.bind(this)
   }
 
   async componentWillMount () {
@@ -43,6 +45,14 @@ class App extends Component {
     else {
       console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
     }
+  }
+
+  createPost (content) {
+    this.setState({ loading: true })
+    this.state.socialNetwork.methods.createPost(content).send({ from: this.state.account })
+      .once('receipt', (receipt) => {
+        this.setState({ loading: false })
+      })
   }
 
   async loadBlockchainData () {
@@ -84,7 +94,10 @@ class App extends Component {
           ? <div id="loader" className="text-center mt-5">
               <p>Loading...</p>
             </div>
-          : <Main posts={ this.state.posts } />
+          : <Main
+              posts={ this.state.posts }
+              createPost={ this.createPost }
+            />
         }
       </div>
     );
